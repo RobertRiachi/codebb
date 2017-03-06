@@ -21,6 +21,8 @@ SCAN X Y
 SCOREBOARD
 CONFIGURATIONS
 """
+
+#Math Operations Used
 def distance(pos1, pos2 = (0,0)):
   return math.sqrt(squaredDistance(pos1, pos2))
 def squaredDistance(pos1, pos2 = (0,0)):
@@ -45,6 +47,7 @@ def angle(pos):
 def norm(vec):
   return scale(1/distance(vec), vec)
 
+#Defines the class that allows the user to connect to the server
 class Player:
   def __init__(self, HOST, PORT, USERNAME, PASSWORD):
     self.stack = set()
@@ -127,10 +130,12 @@ class Player:
     self.sendCommand("ACCELERATE " + str(angle) + " " + str(magnitude))
   
   def setBomb(self, pos, delay):
+    #Sends Bomb command to commandline
     #requires delay: >=20 in frames where 1 frame = 25milsecond
     self.sendCommand("BOMB " + str(pos[0]) + " " + str(pos[1]) + " " + str(delay))
 
   def scanXY(self, pos):
+    #Sends ScanXY command to commandline
     response = self.sendCommand("SCAN " + str(pos[0]) + " " + str(pos[1]))
     if response.find("ERROR") == -1:
       print('scan', len(self.seen))
@@ -289,6 +294,8 @@ while True:
     print("Error", str(e))
     traceback.print_exc()
 
+#Errors encountered    
+    
 #('Error', "invalid literal for float(): -13.08585358'")
 #('Error', "could not convert string to float: '")
 #('Error', "invalid literal for int() with base 10: '1.8850081045206708E-125'"
